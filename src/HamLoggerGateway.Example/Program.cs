@@ -8,9 +8,10 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Console;
 
 #region Setup logging and configuration
+
 // Sets up logging and configuration for the application by initializing the logger, reading the configuration file,
 // and ensuring we have at least one server config
-using ILoggerFactory loggerFactory =
+using var loggerFactory =
     LoggerFactory.Create(builder =>
         builder.AddSimpleConsole(options =>
         {
@@ -19,14 +20,14 @@ using ILoggerFactory loggerFactory =
             options.SingleLine = true;
             options.TimestampFormat = "HH:mm:ss ";
         }));
-ILogger logger = loggerFactory.CreateLogger("HamLoggerGateway.Example");
+var logger = loggerFactory.CreateLogger("HamLoggerGateway.Example");
 
 IConfiguration configuration = new ConfigurationBuilder()
     .AddJsonFile("config.json", true, true)
     .Build();
 
 logger.LogInformation("Reading configuration file.");
-HamLoggerGatewaySettings? config = configuration.Get<HamLoggerGatewaySettings?>();
+var config = configuration.Get<HamLoggerGatewaySettings?>();
 if (config is { N1MMTcpServer: null, N1MMUdpServer: null })
 {
     logger.LogError("Server configuration is incomplete. Please check the configuration settings.");
@@ -36,6 +37,7 @@ if (config is { N1MMTcpServer: null, N1MMUdpServer: null })
 #endregion
 
 #region Setup N1MM message processor, validators, and handlers
+
 // Initializes the message processor, validators, and handlers for N1MM messages.
 
 var n1mmMessageHandler = new N1MMConsoleOutputMessageHandler();
@@ -68,10 +70,7 @@ try
     }
 
     // Start the servers
-    foreach (var server in servers)
-    {
-        server?.Start(cancellationTokenSource);
-    }
+    foreach (var server in servers) server?.Start(cancellationTokenSource);
 
     logger.LogInformation("Press CTRL-C to quit.");
 
@@ -88,10 +87,7 @@ catch (Exception ex)
 }
 finally
 {
-    foreach (var server in servers)
-    {
-        server?.Stop();
-    }
+    foreach (var server in servers) server?.Stop();
 }
 
 static CancellationTokenSource GenerateCancellationTokenSource()

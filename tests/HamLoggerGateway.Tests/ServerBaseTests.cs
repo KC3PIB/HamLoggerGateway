@@ -3,9 +3,6 @@ using System.Net.Sockets;
 using Microsoft.Extensions.Logging;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
-using System.Threading;
-using System.Threading.Tasks;
-using HamLoggerGateway;
 using Assert = Microsoft.VisualStudio.TestTools.UnitTesting.Assert;
 
 namespace HamLoggerGateway.Tests;
@@ -13,8 +10,8 @@ namespace HamLoggerGateway.Tests;
 [TestClass]
 public class ServerBaseTests
 {
-    private Mock<IMessageProcessor> _messageProcessorMock = null!;
     private Mock<ILogger> _loggerMock = null!;
+    private Mock<IMessageProcessor> _messageProcessorMock = null!;
     private ServerSettings _settings = null!;
 
     [TestInitialize]

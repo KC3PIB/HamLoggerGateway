@@ -1,5 +1,4 @@
 ﻿using System.Net;
-using System.Text;
 using System.Xml;
 using System.Xml.Serialization;
 using HamLoggerGateway.MessageProcessors.N1MM.Schema;
