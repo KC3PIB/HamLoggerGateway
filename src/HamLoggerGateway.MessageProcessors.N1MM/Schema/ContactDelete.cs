@@ -1,3 +1,4 @@
+using System.Text.Json.Serialization;
 using System.Xml.Serialization;
 
 namespace HamLoggerGateway.MessageProcessors.N1MM.Schema;
@@ -20,7 +21,12 @@ public class ContactDelete
     public DateTime Timestamp { get; set; }
 
 
+    /// <summary>
+    ///     Gets or sets the timestamp of the contact. The format is expected to be "YYYY-MM-DD HH:MM:SS".
+    /// </summary>
+    /// <exception cref="InvalidOperationException"></exception>
     [XmlElement("timestamp")]
+    [JsonIgnore]
     public string TimestampString
     {
         get => Timestamp.ToString("yyyy-MM-dd HH:mm:ss");

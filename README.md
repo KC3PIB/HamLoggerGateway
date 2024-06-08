@@ -15,7 +15,8 @@ This work is licensed under a
 
 ## Overview
 
-The Ham Logger Gateway facilitates the processing of messages from different Ham Radio logging software. It contains asynchronous UDP and TCP servers and supports IPv4 and IPv6, providing an example of handling and processing messages.
+The Ham Logger Gateway facilitates the processing of messages from different Ham Radio logging software. It contains
+asynchronous UDP and TCP servers and supports IPv4 and IPv6, providing an example of handling and processing messages.
 
 ## Features
 

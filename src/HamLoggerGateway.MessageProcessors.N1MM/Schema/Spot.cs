@@ -1,4 +1,4 @@
-﻿using System.Globalization;
+﻿using System.Text.Json.Serialization;
 using System.Xml.Serialization;
 
 namespace HamLoggerGateway.MessageProcessors.N1MM.Schema;
@@ -50,13 +50,13 @@ public class Spot
     ///     Gets or sets the timestamp of the spot as a string.
     /// </summary>
     [XmlElement("timestamp")]
+    [JsonIgnore]
     public string TimestampString
     {
         get => Timestamp.ToString("yyyy-MM-dd HH:mm:ss");
         set
         {
-            if (!DateTime.TryParseExact(value, "yyyy-MM-dd HH:mm:ss", CultureInfo.InvariantCulture, DateTimeStyles.None,
-                    out var parsedDate))
+            if (!N1MMDateTimeUtils.TryParseN1MMDateTime(value, out var parsedDate))
                 throw new InvalidOperationException($"Invalid datetime value '{value}' for Timestamp.");
             Timestamp = parsedDate;
         }
