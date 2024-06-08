@@ -2,11 +2,13 @@
   "N1MMUdpServer": {
     "Address": "::",
     "Port": 12060,
-    "BufferSize": 1500
+    "BufferSize": 1500,
+    "RequestsPerMinutePerIp": 1024
   },
   "N1MMTcpServer": {
     "Address": "::",
     "Port": 12060,
-    "BufferSize": 16384
+    "BufferSize": 16384,
+    "RequestsPerMinutePerIp": 1024
   }
 }

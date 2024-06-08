@@ -73,7 +73,7 @@ public class N1MMMessageProcessor : IMessageProcessor
             using var reader = XmlReader.Create(stream, new XmlReaderSettings { Async = true });
 
             await reader.MoveToContentAsync();
-            var rootElementName = reader.Name.ToLowerInvariant(); // Case-insensitive
+            var rootElementName = reader.Name.ToLowerInvariant();
 
             if (!_messageTypes.TryGetValue(rootElementName, out var messageType))
             {
@@ -81,20 +81,22 @@ public class N1MMMessageProcessor : IMessageProcessor
                 return;
             }
 
-            _logger.LogDebug("N1MM Raw XML Packet:\r\n{Data}", Encoding.UTF8.GetString(stream.ToArray()));
-
             stream.Position = 0; // Reset stream for deserialization
             var serializer = new XmlSerializer(messageType, new XmlAttributeOverrides());
             var messageObject = serializer.Deserialize(stream);
 
-            if (messageObject == null || (_validators.TryGetValue(messageType, out var validator) &&
-                                          !validator.IsValid(messageObject)))
+            if (messageObject == null)
+            {
+                _logger.LogWarning("Null message received for type: {MessageType}", messageType);
+                return;
+            }
+
+            if (_validators.TryGetValue(messageType, out var validator) && !validator.IsValid(messageObject))
             {
                 _logger.LogWarning("Invalid message received: {MessageObject}", messageObject);
                 return;
             }
 
-            // Process the validated message asynchronously
             await ProcessValidMessageAsync(messageObject, messageType, remoteEndpoint, cancellationToken);
         }
         catch (Exception ex)
