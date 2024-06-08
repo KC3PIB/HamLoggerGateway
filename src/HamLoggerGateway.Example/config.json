@@ -1,0 +1,12 @@
+﻿{
+  "N1MMUdpServer": {
+    "Address": "::",
+    "Port": 12060,
+    "BufferSize": 1500
+  },
+  "N1MMTcpServer": {
+    "Address": "::",
+    "Port": 12060,
+    "BufferSize": 16384
+  }
+}

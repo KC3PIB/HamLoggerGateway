@@ -1,0 +1,15 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net8.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <AssemblyName>HamLoggerGateway.MessageProcessors.N1MM</AssemblyName>
+        <RootNamespace>HamLoggerGateway.MessageProcessors.N1MM</RootNamespace>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\HamLoggerGateway\HamLoggerGateway.csproj"/>
+    </ItemGroup>
+
+</Project>
